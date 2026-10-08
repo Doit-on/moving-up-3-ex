@@ -5,7 +5,7 @@
  * ==============================================================================
  */
 
-const SettingsController = {
+var SettingsController = {
   soundEnabled: localStorage.getItem('mu3_sound_enabled') !== 'false',
   theme: localStorage.getItem('mu3_theme') || 'light',
   fontSize: localStorage.getItem('mu3_fontsize') || 'normal',

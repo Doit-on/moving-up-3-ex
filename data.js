@@ -9,7 +9,7 @@
  * ==============================================================================
  */
 
-const APP_META = {
+var APP_META = {
   "bookCode": "MU-B3",
   "version": "1.0.0",
   "buildTag": "v1.0.0-canyon",
@@ -22,7 +22,7 @@ const APP_META = {
   "totalItems": 150
 };
 
-const PRODUCT_COVERS = [
+var PRODUCT_COVERS = [
   {
     "id": "mu3",
     "title": "Moving Up 3: Critical Reading",
@@ -97,7 +97,7 @@ const PRODUCT_COVERS = [
   }
 ];
 
-const DEFAULT_EXERCISES = [
+var DEFAULT_EXERCISES = [
   {
     "id": 1,
     "unit": 1,

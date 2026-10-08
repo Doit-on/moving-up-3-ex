@@ -5,7 +5,7 @@
  * ==============================================================================
  */
 
-const SystemCheck = {
+var SystemCheck = {
   openModal() {
     const modal = document.getElementById('systemModal');
     if (modal) {

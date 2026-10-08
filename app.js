@@ -7,7 +7,7 @@
  */
 
 // Application State
-const AppState = {
+var AppState = {
   currentView: 'landing', // 'landing', 'player', 'summary'
   currentExercise: null,
   activeTab: 'partA', // 'partA', 'partB', 'partC', 'review'
@@ -45,7 +45,7 @@ const AppState = {
 // ============================================================
 // Web Audio API Procedural Sound Synthesizer (Zero asset dependency)
 // ============================================================
-const SoundFX = {
+var SoundFX = {
   ctx: null,
 
   init() {
@@ -104,7 +104,7 @@ const SoundFX = {
 // ============================================================
 // Dual Audio & Speech Engine (Native MP3 + Fallback Web Speech)
 // ============================================================
-const AudioEngine = {
+var AudioEngine = {
   nativeAudio: null,
   isPlaying: false,
   usingTTS: false,
@@ -416,7 +416,7 @@ const AudioEngine = {
 // ============================================================
 // Main Application Controller
 // ============================================================
-const App = {
+var App = {
   getAssetPath(url) {
     if (!url) return '';
     if (window.IS_FLAT_STRUCTURE) {
@@ -427,15 +427,21 @@ const App = {
 
   handleImgError(img) {
     if (!img) return;
-    if (!img.dataset.triedFlat && img.src && img.src.includes('assets/')) {
+    if (!img.dataset.triedFlat) {
       img.dataset.triedFlat = '1';
-      img.src = img.src.substring(img.src.lastIndexOf('/') + 1);
-    } else {
-      img.src = window.IS_FLAT_STRUCTURE ? 'cover.jpg' : 'assets/images/cover.jpg';
+      const currentSrc = img.getAttribute('src') || img.src || '';
+      const filename = currentSrc.substring(currentSrc.lastIndexOf('/') + 1);
+      if (filename) {
+        img.src = filename;
+        return;
+      }
     }
+    img.src = window.IS_FLAT_STRUCTURE ? 'cover.jpg' : 'assets/images/cover.jpg';
   },
 
   init() {
+    if (this.isInitialized) return;
+    this.isInitialized = true;
     SettingsController.init();
     I18N.applyTranslations();
 

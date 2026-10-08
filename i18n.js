@@ -6,7 +6,7 @@
  * ==============================================================================
  */
 
-const I18N = {
+var I18N = {
   currentLang: (typeof localStorage !== 'undefined' && localStorage.getItem('mu3_lang')) || 'th',
 
   dict: {
