@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#24292e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Moving Up 3: Critical Reading (ม.6) - เว็บแอปพลิเคชันแบบฝึกหัดพัฒนาทักษะการอ่านวิเคราะห์ภาษาอังกฤษ สำนักพิมพ์ไทยวัฒนาพานิช (ทวพ) & WorldCom ELT">
+
+  <title>Moving Up 3: Critical Reading (ม.6) - สำนักพิมพ์ไทยวัฒนาพานิช</title>
+
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Favicon & PWA -->
+  <link rel="icon" type="image/png" href="assets/images/twp_logo.png">
+  <link rel="apple-touch-icon" href="assets/images/twp_logo.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       TOP NAVIGATION BAR
+       ============================================================ -->
+  <header class="app-navbar">
+    <div class="nav-brand" onclick="App.switchView('landing')" title="กลับหน้าแรก">
+      <img src="assets/images/twp_logo.png" alt="ทวพ Logo" class="nav-logo-twp">
+      <div class="nav-titles">
+        <div class="nav-title-main">
+          <span data-i18n="nav_title">Moving Up 3: Critical Reading</span>
+          <span class="badge-level">ม.6 • Grade 12</span>
+        </div>
+        <div class="nav-subtitle" data-i18n="nav_subtitle">หนังสือเรียน รายวิชาเพิ่มเติม ภาษาอังกฤษ ม.6</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Version Tracking Badge -->
+      <span class="version-pill" id="navbarVersionPill" title="คลิกเพื่อดูรายละเอียดเวอร์ชัน" onclick="SystemCheck.openModal()">v1.0.0</span>
+
+      <!-- Language Switcher -->
+      <button type="button" class="btn-nav" id="btnLangToggle" onclick="I18N.toggleLanguage()" title="Switch Language">
+        <span>🌐</span> English
+      </button>
+
+      <!-- System Diagnostics -->
+      <button type="button" class="btn-nav" onclick="SystemCheck.openModal()" title="ตรวจสอบระบบ">
+        <span>🔍</span> <span data-i18n="nav_btn_system">ตรวจระบบ</span>
+      </button>
+
+      <!-- Settings -->
+      <button type="button" class="btn-nav" onclick="SettingsController.openModal()" title="ตั้งค่าระบบ">
+        <span>⚙️</span> <span data-i18n="nav_btn_settings">ตั้งค่า</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN APP CONTAINER
+       ============================================================ -->
+  <main class="view-container">
+
+    <!-- ------------------------------------------------------------
+         VIEW 1: LANDING PAGE
+         ------------------------------------------------------------ -->
+    <section class="app-view active" id="view-landing">
+      <!-- Hero Showcase -->
+      <div class="landing-hero">
+        <div class="hero-content">
+          <div class="hero-badges-row">
+            <span class="hero-badge highlight">📘 Critical Reading (อ่านวิเคราะห์)</span>
+            <span class="hero-badge">มัธยมศึกษาปีที่ 6 (Grade 12)</span>
+            <span class="hero-badge">สำนักพิมพ์ไทยวัฒนาพานิช (ทวพ)</span>
+          </div>
+
+          <h1 class="hero-title" data-i18n="hero_title">
+            แบบฝึกหัดพัฒนาทักษะการอ่านวิเคราะห์
+          </h1>
+
+          <p class="hero-subtitle" data-i18n="hero_subtitle">
+            พัฒนาทักษะการคิดวิเคราะห์ การอ่านจับใจความ การเติมคำศัพท์ และการเรียงประโยคภาษาอังกฤษ
+          </p>
+
+          <div class="hero-cta-group">
+            <button type="button" class="btn-hero-primary" onclick="App.enterExercise(1)">
+              <span data-i18n="hero_btn_start">เริ่มบทเรียน Unit 1</span> <span>➔</span>
+            </button>
+            <button type="button" class="btn-hero-secondary" onclick="document.getElementById('exercisesSection').scrollIntoView({ behavior: 'smooth' })">
+              <span data-i18n="hero_btn_explore">เลือกบทเรียนทั้งหมด (1-10)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Book Cover Showcase -->
+        <div class="hero-book-showcase">
+          <div class="book-card-3d" onclick="App.openLightbox('assets/images/cover.jpg')" title="คลิกเพื่อขยายภาพปก">
+            <img src="assets/images/cover.jpg" alt="Moving Up 3 Critical Reading Cover Book" onerror="if(!this.dataset.triedFlat){this.dataset.triedFlat='1';this.src='cover.jpg';}">
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Ribbon -->
+      <div class="stats-ribbon">
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-info">
+            <div class="stat-info-title" data-i18n="stat_units">10 บทเรียน</div>
+            <div class="stat-info-sub" data-i18n="stat_units_sub">ครบทั้งเล่มหลักสูตร ม.6</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📝</div>
+          <div class="stat-info">
+            <div class="stat-info-title" data-i18n="stat_parts">3 พาร์ท / บท</div>
+            <div class="stat-info-sub" data-i18n="stat_parts_sub">15 ข้อต่อบท รวม 150 ข้อ</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🔊</div>
+          <div class="stat-info">
+            <div class="stat-info-title" data-i18n="stat_audio">ระบบเสียง & การอ่าน</div>
+            <div class="stat-info-sub" data-i18n="stat_audio_sub">Native MP3 + Smart TTS</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-info">
+            <div class="stat-info-title" data-i18n="stat_offline">ออฟไลน์ 100%</div>
+            <div class="stat-info-sub" data-i18n="stat_offline_sub">ใช้งานได้ทุกที่ ทุกอุปกรณ์</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Units Grid Section -->
+      <div class="section-header" id="exercisesSection">
+        <h2 class="section-title" data-i18n="section_units_title">แบบฝึกหัดและบทเรียน (Units 1–10)</h2>
+        <p class="section-subtitle" data-i18n="section_units_sub">เลือกบทเรียนที่ต้องการเพื่อฝึกการอ่านวิเคราะห์ คำศัพท์ และการจัดเรียงประโยค</p>
+      </div>
+
+      <div class="exercises-grid" id="exercisesGrid">
+        <!-- Injected via App.renderLandingGrid() -->
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         VIEW 2: EXERCISE PLAYER (SPLIT PASSAGE & QUIZ)
+         ------------------------------------------------------------ -->
+    <section class="app-view" id="view-player">
+      <!-- Player Topbar -->
+      <div class="player-topbar">
+        <div class="player-unit-info">
+          <button type="button" class="btn-nav" onclick="App.switchView('landing')">
+            <span data-i18n="btn_back_to_units">← กลับหน้ารวมบทเรียน</span>
+          </button>
+          <span class="player-unit-badge" id="playerUnitBadge">Main Idea</span>
+          <h2 class="player-unit-title" id="playerUnitTitle">Unit 1: Two Sides of the Same Story</h2>
+        </div>
+
+        <div class="player-controls">
+          <button type="button" class="btn-audio-player" id="btnPlayAudio" onclick="AudioEngine.isPlaying ? AudioEngine.stopAudio() : AudioEngine.playExerciseAudio(AppState.currentExercise)">
+            <span>🔊</span> <span data-i18n="btn_listen_audio">ฟังเสียงอ่าน</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Split Layout Grid -->
+      <div class="player-split-grid">
+        <!-- Left Panel: Reading Passage -->
+        <div class="passage-panel">
+          <!-- Compact Media Bar: Full Uncropped Image Thumbnail + Audio Controls -->
+          <div class="passage-media-bar">
+            <!-- Compact 16:9 Thumbnail (Full Image, 0% Cropped) -->
+            <div class="passage-thumbnail-wrap" onclick="App.openLightbox(AppState.currentExercise?.cover)" title="คลิกเพื่อขยายดูภาพขนาดเต็ม (Zoom View)">
+              <img id="passageHeroImage" src="" alt="Lesson Illustration">
+              <span class="passage-zoom-pill">🔍 แตะขยายภาพเต็มจอ</span>
+            </div>
+
+            <!-- Audio Controller & Status -->
+            <div class="passage-audio-box">
+              <div class="audio-box-header">
+                <span class="audio-status-badge" id="audioStatusBadge">🔊 พร้อมเล่นเสียงอ่าน</span>
+                <span class="audio-format-pill" id="audioFormatPill">Native MP3 Ready</span>
+              </div>
+
+              <div class="audio-controls-row">
+                <button type="button" class="btn-audio-main" id="btnAudioMain" onclick="AudioEngine.togglePlay()">
+                  <span id="audioMainIcon">▶️</span> <span id="audioMainText">ฟังเสียงอ่านเนื้อหา</span>
+                </button>
+
+                <div class="audio-speed-picker">
+                  <span class="speed-label">ความเร็ว:</span>
+                  <button type="button" class="btn-speed" id="btnSpeed08" onclick="AudioEngine.setSpeed(0.8)">0.8x</button>
+                  <button type="button" class="btn-speed active" id="btnSpeed10" onclick="AudioEngine.setSpeed(1.0)">1.0x</button>
+                  <button type="button" class="btn-speed" id="btnSpeed12" onclick="AudioEngine.setSpeed(1.2)">1.2x</button>
+                </div>
+              </div>
+
+              <div class="audio-hint-text">
+                🎧 รองรับไฟล์เสียง MP3 เจ้าของภาษา (`assets/audio/ex[N].mp3`) พร้อมระบบอ่านอัตโนมัติ
+              </div>
+            </div>
+          </div>
+
+          <!-- Roomy Reading Body -->
+          <div class="passage-scroll-body">
+            <div class="passage-skill-box" id="passageSkillBox">
+              <!-- Skill details -->
+            </div>
+            <div class="passage-article" id="passageTextBody">
+              <!-- Paragraphs -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Interactive Quiz -->
+        <div class="quiz-panel">
+          <!-- Quiz Navigation Tabs -->
+          <div class="quiz-tabs-nav">
+            <button type="button" class="quiz-tab-btn active" id="tabBtn_partA" onclick="App.switchTab('partA')">
+              <span data-i18n="tab_part_a">Part 1: อ่านวิเคราะห์</span>
+            </button>
+            <button type="button" class="quiz-tab-btn" id="tabBtn_partB" onclick="App.switchTab('partB')">
+              <span data-i18n="tab_part_b">Part 2: Fill in the blanks</span>
+            </button>
+            <button type="button" class="quiz-tab-btn" id="tabBtn_partC" onclick="App.switchTab('partC')">
+              <span data-i18n="tab_part_c">Part 3: เรียงประโยค</span>
+            </button>
+            <button type="button" class="quiz-tab-btn" id="tabBtn_review" onclick="App.switchTab('review')">
+              <span data-i18n="tab_review">สรุป & ทบทวน</span>
+            </button>
+          </div>
+
+          <div class="quiz-tab-content">
+            <!-- TAB 1: PART A (MCQs) -->
+            <div class="tab-pane active" id="pane_partA">
+              <div class="quiz-instruction-banner">
+                <div class="instruction-title" data-i18n="inst_part_a_title">Part 1: Comprehension & Critical Analysis</div>
+                <div class="instruction-sub" data-i18n="inst_part_a_sub">เลือกคำตอบที่ถูกต้องที่สุดจากบทอ่านด้านซ้าย (5 ข้อ 5 คะแนน)</div>
+              </div>
+
+              <div id="partAQuestionsList">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <div class="part-actions-bar">
+                <button type="button" class="btn-action primary" onclick="App.submitPartA()">
+                  <span>📊</span> <span data-i18n="btn_summary_part">ตรวจ & สรุปคะแนนพาร์ทนี้</span>
+                </button>
+                <button type="button" class="btn-action" onclick="App.toggleKeyPartA()">
+                  <span>🔑</span> <span data-i18n="btn_show_key">ดูเฉลยพร้อมคำอธิบาย</span>
+                </button>
+                <button type="button" class="btn-action accent" onclick="App.switchTab('partB')">
+                  <span data-i18n="btn_next_part">ไปยังพาร์ทถัดไป ➔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 2: PART B (WORD BANK) -->
+            <div class="tab-pane" id="pane_partB">
+              <div class="quiz-instruction-banner">
+                <div class="instruction-title" data-i18n="inst_part_b_title">Part 2: Fill in the blanks</div>
+                <div class="instruction-sub" data-i18n="inst_part_b_sub">แตะเลือกคำศัพท์จากกล่องด้านบนเพื่อนำมาเติมในช่องว่างให้ประโยคสมบูรณ์</div>
+              </div>
+
+              <!-- Word Bank Scrambled Pool -->
+              <div class="word-bank-pool-box">
+                <div class="pool-label">WORD BANK</div>
+                <div class="pool-chips-wrap" id="wordBankPool">
+                  <!-- Word Chips -->
+                </div>
+              </div>
+
+              <!-- Questions with Fill Blanks -->
+              <div id="wordBankQuestions">
+                <!-- Sentences -->
+              </div>
+
+              <div class="part-actions-bar">
+                <button type="button" class="btn-action primary" onclick="App.submitPartB()">
+                  <span>📊</span> <span data-i18n="btn_summary_part">ตรวจ & สรุปคะแนนพาร์ทนี้</span>
+                </button>
+                <button type="button" class="btn-action" onclick="App.toggleKeyPartB()">
+                  <span>🔑</span> <span data-i18n="btn_show_key">ดูเฉลยพร้อมคำอธิบาย</span>
+                </button>
+                <button type="button" class="btn-action accent" onclick="App.switchTab('partC')">
+                  <span data-i18n="btn_next_part">ไปยังพาร์ทถัดไป ➔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 3: PART C (SENTENCE UNSCRAMBLE) -->
+            <div class="tab-pane" id="pane_partC">
+              <div class="quiz-instruction-banner">
+                <div class="instruction-title" data-i18n="inst_part_c_title">Part 3: Sentence Unscramble (การเรียงประโยค)</div>
+                <div class="instruction-sub" data-i18n="inst_part_c_sub">แตะกลุ่มคำด้านล่างเพื่อเรียงเป็นประโยคที่ถูกต้องตามโครงสร้างไวยากรณ์และความหมาย</div>
+              </div>
+
+              <div id="unscrambleList">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <div class="part-actions-bar">
+                <button type="button" class="btn-action" onclick="App.resetTokensC()">
+                  <span>✕</span> <span data-i18n="btn_reset_tokens">ล้างคำตอบ</span>
+                </button>
+                <button type="button" class="btn-action primary" onclick="App.submitPartC()">
+                  <span>📊</span> <span data-i18n="btn_summary_part">ตรวจ & สรุปคะแนนพาร์ทนี้</span>
+                </button>
+                <button type="button" class="btn-action" onclick="App.toggleKeyPartC()">
+                  <span>🔑</span> <span data-i18n="btn_show_key">ดูเฉลยพร้อมคำอธิบาย</span>
+                </button>
+                <button type="button" class="btn-action accent" onclick="App.showSummary()">
+                  <span>🎉</span> <span data-i18n="btn_finish_unit">สรุปผลคะแนนบทนี้ 🎉</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 4: REVIEW & SKILLS -->
+            <div class="tab-pane" id="pane_review">
+              <div id="reviewContentContainer">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         VIEW 3: SCORE SUMMARY & MASTERY CARD
+         ------------------------------------------------------------ -->
+    <section class="app-view" id="view-summary">
+      <div class="summary-card" id="summaryCardContent">
+        <!-- Rendered dynamically via App.showSummary() -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       BOTTOM PRODUCT SHOWCASE BANNER (COLLAPSIBLE MARQUEE)
+       ============================================================ -->
+  <aside class="bottom-product-showcase" id="bottomProductShowcase">
+    <div class="showcase-header">
+      <div class="showcase-title-wrap">
+        <span class="showcase-badge" data-i18n="showcase_badge">TWP Collection</span>
+        <span class="showcase-title" data-i18n="showcase_header_title">ชุดสื่อการเรียนรู้ภาษาอังกฤษคุณภาพ สำนักพิมพ์ไทยวัฒนาพานิช (ทวพ)</span>
+      </div>
+      <div class="showcase-actions">
+        <button type="button" class="btn-toggle-showcase" id="btnToggleShowcase" onclick="App.toggleProductShowcase()" title="ย่อแถบโฆษณา">
+          <span class="icon-toggle">▼</span>
+          <span data-i18n="showcase_minimize">ย่อแถบ</span>
+        </button>
+      </div>
+    </div>
+    <div class="showcase-marquee-track-wrapper">
+      <div class="showcase-marquee-track" id="productMarqueeTrack">
+        <!-- Injected via App.renderProductMarquee() -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       MODALS: SETTINGS, DIAGNOSTICS, LIGHTBOX
+       ============================================================ -->
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" onclick="if(event.target === this) SettingsController.closeModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" data-i18n="modal_settings_title">การตั้งค่าระบบ (Settings)</h3>
+        <button type="button" class="btn-modal-close" onclick="SettingsController.closeModal()">✕</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <!-- Sound Effect Toggle -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;" data-i18n="setting_sound_title">เสียงประกอบ (Sound Effects)</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);" data-i18n="setting_sound_desc">เปิด/ปิดเสียงเมื่อตอบถูก ตอบผิด และเสียงเฉลิมฉลอง</div>
+          </div>
+          <input type="checkbox" id="soundToggleCheckbox" checked onchange="SettingsController.toggleSound()" style="transform:scale(1.3); cursor:pointer;">
+        </div>
+
+        <!-- Theme Toggle -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;">ธีมการแสดงผล (Theme Mode)</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">สลับระหว่างธีมสว่าง (Ocean Marine) และธีมมืด (Dark Mode)</div>
+          </div>
+          <button type="button" class="btn-action" onclick="SettingsController.toggleTheme()">
+            <span>🌓</span> สลับธีม
+          </button>
+        </div>
+
+        <!-- Font Size -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;">ขนาดตัวอักษรบทอ่าน (Font Size)</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">ปรับขนาดตัวอักษรเพื่อให้อ่านบทความได้สบายตา</div>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button type="button" class="btn-action" onclick="SettingsController.applyFontSize('small')">ก-</button>
+            <button type="button" class="btn-action" onclick="SettingsController.applyFontSize('normal')">ปกติ</button>
+            <button type="button" class="btn-action" onclick="SettingsController.applyFontSize('large')">ก+</button>
+          </div>
+        </div>
+
+        <!-- Reset All Progress -->
+        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:14px;">
+          <div>
+            <div style="font-weight:700; color:var(--danger);" data-i18n="setting_reset_title">รีเซ็ตคะแนนและความก้าวหน้า</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);" data-i18n="setting_reset_desc">ล้างประวัติการทำแบบฝึกหัด Moving Up 3 ทั้งหมดในเครื่องนี้</div>
+          </div>
+          <button type="button" class="btn-action" style="color:var(--danger); border-color:var(--danger);" onclick="SettingsController.resetAllProgress()">
+            <span data-i18n="btn_reset_storage">ล้างข้อมูล</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Diagnostics Modal -->
+  <div class="modal-overlay" id="systemModal" onclick="if(event.target === this) SystemCheck.closeModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">ตรวจเช็กระบบและความพร้อม (Diagnostics)</h3>
+        <button type="button" class="btn-modal-close" onclick="SystemCheck.closeModal()">✕</button>
+      </div>
+
+      <div id="systemResultsContainer">
+        <!-- Results injected by SystemCheck.runDiagnostics() -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="modal-overlay" id="lightboxModal" onclick="if(event.target === this) App.closeLightbox()">
+    <div class="lightbox-modal">
+      <img id="lightboxImg" src="" alt="Enlarged Illustration">
+      <button type="button" class="btn-action" onclick="App.closeLightbox()" style="margin-top:12px; background:#ffffff; color:#000000;">
+        ปิดหน้าต่างขยายภาพ [ESC]
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ============================================================
+       APPLICATION SCRIPTS
+       ============================================================ -->
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/system-check.js"></script>
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker Registration (HTTP / HTTPS only) -->
+  <script>
+    if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(reg => {
+          console.log('[PWA] Service Worker registered:', reg.scope);
+        }).catch(err => {
+          console.warn('[PWA] Service Worker registration skipped:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
