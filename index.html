@@ -16,12 +16,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <!-- Favicon & PWA -->
-  <link rel="icon" type="image/png" href="assets/images/twp_logo.png">
-  <link rel="apple-touch-icon" href="assets/images/twp_logo.png">
+  <link rel="icon" type="image/png" href="assets/images/twp_logo.png" onerror="this.onerror=null;this.href='twp_logo.png';">
+  <link rel="apple-touch-icon" href="assets/images/twp_logo.png" onerror="this.onerror=null;this.href='twp_logo.png';">
   <link rel="manifest" href="manifest.json">
 
-  <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Core Stylesheet (Universal Dual-Path: Nested or Flat) -->
+  <link rel="stylesheet" href="css/style.css" id="linkCssNested">
+  <link rel="stylesheet" href="style.css" id="linkCssFlat">
+  <script>
+    (function() {
+      var n = document.getElementById('linkCssNested');
+      var f = document.getElementById('linkCssFlat');
+      if (n) {
+        n.onerror = function() {
+          window.IS_FLAT_STRUCTURE = true;
+          if (n.parentNode) n.parentNode.removeChild(n);
+        };
+      }
+      if (f) {
+        f.onerror = function() {
+          if (f.parentNode) f.parentNode.removeChild(f);
+        };
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -30,7 +48,7 @@
        ============================================================ -->
   <header class="app-navbar">
     <div class="nav-brand" onclick="App.switchView('landing')" title="กลับหน้าแรก">
-      <img src="assets/images/twp_logo.png" alt="ทวพ Logo" class="nav-logo-twp">
+      <img src="assets/images/twp_logo.png" alt="ทวพ Logo" class="nav-logo-twp" onerror="if(!this.dataset.triedFlat){this.dataset.triedFlat='1';this.src='twp_logo.png';}">
       <div class="nav-titles">
         <div class="nav-title-main">
           <span data-i18n="nav_title">Moving Up 3: Critical Reading</span>
@@ -457,14 +475,63 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- ============================================================
-       APPLICATION SCRIPTS
+       APPLICATION SCRIPTS (Universal Dual-Path: Nested & Flat)
        ============================================================ -->
-  <script src="js/data.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/system-check.js"></script>
-  <script src="js/qrcode.min.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+    (function() {
+      var scripts = [
+        'data.js',
+        'i18n.js',
+        'settings.js',
+        'system-check.js',
+        'qrcode.min.js',
+        'app.js'
+      ];
+      var baseDir = (window.IS_FLAT_STRUCTURE ? '' : 'js/');
+      var idx = 0;
+
+      function loadScript(src, cb, errCb) {
+        var el = document.createElement('script');
+        el.src = src;
+        el.onload = cb;
+        el.onerror = errCb;
+        document.body.appendChild(el);
+      }
+
+      function loadSequence() {
+        if (idx >= scripts.length) {
+          if (window.App && !window.App.isInitialized && typeof window.App.init === 'function') {
+            window.App.init();
+          }
+          return;
+        }
+        var file = scripts[idx];
+        loadScript(baseDir + file, function() {
+          idx++;
+          loadSequence();
+        }, function() {
+          if (baseDir === 'js/') {
+            baseDir = '';
+            window.IS_FLAT_STRUCTURE = true;
+            loadScript(file, function() {
+              idx++;
+              loadSequence();
+            }, function(err) {
+              console.error('[Loader] Failed to load script:', file, err);
+              idx++;
+              loadSequence();
+            });
+          } else {
+            console.error('[Loader] Failed to load script:', file);
+            idx++;
+            loadSequence();
+          }
+        });
+      }
+
+      loadSequence();
+    })();
+  </script>
 
   <!-- Service Worker Registration (HTTP / HTTPS only) -->
   <script>
